@@ -24,14 +24,14 @@ script:
       echo;
       echo "Running unit tests";
       cd typo3conf/ext/TYPO3_Restler/Tests
-      ./bin/phpunit --colors
+      ../vendor/bin/phpunit --colors
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
       echo;
       echo "Running unit tests";
       cd typo3conf/ext/TYPO3_Restler/Tests
-      ./bin/phpunit --coverage-clover=unittest-coverage.clover --colors
+      ../vendor/bin/phpunit --coverage-clover=unittest-coverage.clover --colors
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
