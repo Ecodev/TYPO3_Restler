@@ -1,10 +1,31 @@
 language: php
 
 php:
+  - 5.3
+  - 5.4
   - 5.5
+  - 5.6
+  - hhvm
 
 env:
+  - TYPO3_BRANCH=master COVERAGE=0
   - TYPO3_BRANCH=TYPO3_6-2 COVERAGE=0
+
+matrix:
+  exclude:
+    - env: TYPO3_BRANCH=master COVERAGE=0
+      php: 5.3
+    - env: TYPO3_BRANCH=master COVERAGE=0
+      php: 5.4
+    - env: TYPO3_BRANCH=master COVERAGE=0
+      php: 5.5
+    - env: TYPO3_BRANCH=master COVERAGE=0
+      php: 5.6
+    - env: TYPO3_BRANCH=master COVERAGE=0
+      php: hhvm
+  include:
+    - php: 5.5
+      env: TYPO3_BRANCH=TYPO3_6-2 COVERAGE=1
 
 before_script:
   - composer self-update
@@ -38,7 +59,8 @@ script:
     if [[ "$COVERAGE" == "1" ]]; then
       echo;
       echo "Uploading code coverage results";
+      cd ..
       wget https://scrutinizer-ci.com/ocular.phar
-      cp -R typo3conf/ext/TYPO3_Restler/.git .
+      cp -R typo3conf/ext/happy_feet/.git .
       php ocular.phar code-coverage:upload --format=php-clover unittest-coverage.clover
     fi
