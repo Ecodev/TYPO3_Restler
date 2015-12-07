@@ -16,7 +16,9 @@ before_script:
   - mv TYPO3_Restler typo3conf/ext/
   - composer install
   - cd typo3conf/ext/TYPO3_Restler
+  - ls
   - composer install
+  - cd ../../../
 
 script:
   - >
