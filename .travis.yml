@@ -36,7 +36,6 @@ before_script:
   - mv TYPO3_Restler typo3conf/ext/
   - composer install
   - cd typo3conf/ext/TYPO3_Restler
-  - ls
   - composer install
   - cd ../../../
 
@@ -45,22 +44,19 @@ script:
     if [[ "$COVERAGE" == "0" ]]; then
       echo;
       echo "Running unit tests";
-      cd typo3conf/ext/TYPO3_Restler/Tests
-      ../vendor/bin/phpunit --colors
+      ./bin/phpunit --colors -c typo3/sysext/core/Build/UnitTests.xml typo3conf/ext/TYPO3_Restler/Tests/Unit/
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
       echo;
       echo "Running unit tests";
-      cd typo3conf/ext/TYPO3_Restler/Tests
-      ../vendor/bin/phpunit --coverage-clover=unittest-coverage.clover --colors
+      ./bin/phpunit --coverage-clover=unittest-coverage.clover --colors -c typo3/sysext/core/Build/UnitTests.xml typo3conf/ext/TYPO3_Restler/Tests/Unit/
     fi
   - >
     if [[ "$COVERAGE" == "1" ]]; then
       echo;
       echo "Uploading code coverage results";
-      cd ..
       wget https://scrutinizer-ci.com/ocular.phar
-      cp -R typo3conf/ext/happy_feet/.git .
+      cp -R typo3conf/ext/TYPO3_Restler/.git .
       php ocular.phar code-coverage:upload --format=php-clover unittest-coverage.clover
     fi
